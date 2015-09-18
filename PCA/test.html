@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>QQ JS省市区三级联动</title>
+    <script type="text/javascript" src="geo.js"></script>
+    <script type="text/javascript" src="geo.js"></script>
+</head>
+<body>
+<form name="shareip" action="/cgi-bin/feedback" method="post">
+    <select class="select" name="province" id="s1">
+        <option></option>
+    </select>
+    <select class="select" name="city" id="s2">
+        <option></option>
+    </select>
+    <select class="select" name="town" id="s3">
+        <option></option>
+    </select>
+    <input id="getpca" type="button" value="提交" />
+</form>
+<script>
+    var pac= new PSAselect();
+    pac.setup();
+    document.getElementById("getpca").addEventListener("click",function(event){
+    alert(JSON.stringify(pac.getPCA()));
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+        <!--标记ng-app告诉AngularJS处理整个HTML页并引导应用：-->
+<html ng-app>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="http://apps.bdimg.com/libs/angular.js/1.4.0-beta.4/angular.min.js"></script>
+    <title></title>
+</head>
+<body >
+<!--双大括号标记{{}}的内容是问候语中绑定的表达式，这个表达式是一个简单的字符串‘World-->
+Hello {{'World'}}!
+<!--AngularJS的双向数据绑定（bi-directional data binding）-->
+Your name: <input type="text" ng-model="yourname" placeholder="默认值">
+<hr>
+Hello {{yourname || 'World'}}!
+<!--文本输入指令<input ng-model="yourname" />绑定到一个叫yourname的模型变量。-->
+<!--双大括号标记将yourname模型变量添加到问候语文本。-->
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+        <!--标记ng-app告诉AngularJS处理整个HTML页并引导应用：-->
+<html ng-app>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="http://apps.bdimg.com/libs/knockout.js/3.1.0/knockout.js"></script>
+    <script>
+        function AppViewModel() {
+         var self=this;
+            this.postdata={};
+            self.files = [
+                {"index": "1",
+                    "snippet": "Fast just got faster with Nexus S."},
+                {"index": "2",
+                    "snippet": "The Next, Next Generation tablet."},
+                {"index": "3",
+                    "snippet": "The Next, Next Generation tablet."}
+            ];
+            this.callfile = function(index) {
+                var t=  $document[0].getElementById("file" + index);
+                if($document[0].all) { //IE
+                    t.fireEvent("onclick");
+                } else  {   //firefox不支持fireEvent
+                    var evt = $document[0].createEvent('HTMLEvents');
+                    evt.initEvent('click',true,true);
+                    t.dispatchEvent(evt);
+                }
+            };
+            this.removefile = function(index,obj) {
+                this.postdata["file" + index] = "";
+            };
+            this.filechange=function(index){
+                var file = this.files[0];
+                var url = webkitURL.createObjectURL(file);
+                /* 生成图片
+                 * ---------------------- */
+                var $img = new Image();
+                $img.src = url;
+                $img.onload = function () {
+                    //生成比例
+                    var width = this.width,
+                            height = this.height,
+                            scale = width / height;
+                    width = parseInt(800);
+                    height = parseInt(width / scale);
+                    //生成canvas
+                    var $canvas = $('#canvas');
+                    var ctx = $canvas[0].getContext('2d');
+                    $canvas.attr({ width: width, height: height });
+                    ctx.drawImage($img, 0, 0, width, height);
+                    var base64 = $canvas[0].toDataURL('image/jpeg', 0.5);
+                    var cc = $("#pic" + index);
+                    cc.attr("src", url);
+                    self.postdata["file" + index] = base64.substr(23);
+                }
+            }
+            ;
+            this.upload=function(){
+//                $http.post('UploadFile/FenXiangImg?wxopenid=222&orderid=111&templateid=1',$scope.postdata).success(function(data) {
+//                    alert("sucess");
+//                });
+            }
+            this.ShareText="";
+        }
+
+    </script>
+    <title></title>
+</head>
+<body>
+<form method="POST" action="UploadFile/FenXiangImg?wxopenid=222&orderid=111" enctype="multipart/form-data">
+    <label>分享语</label><br />
+    <input type="text"  data-bind="text:ShareText"    placeholder="默认值" /> ><br />
+    <input type="button" value="上传" id="btnsubmit"  /><br />
+    <div data-bind="foreach:files">
+        <div style="width: 900px; height: 400px; float: left"  >
+            <div  data-bind="id:index">
+                <div data-bind="id:index"  data-bind="click:$parent.callfile(index)">
+                    <img  data-bind="id:index" style="width: 300px;height:400px;float:left" src="" />
+                    <label  data-bind="click:$parent.removefile(index)" >移除</label>
+                </div>
+                <input  data-bind="change:$parent.filechange(index)"  type="file"    />
+        </div>
+    </div>
+</div>
+</form>
+<canvas id="canvas" style="display:none"></canvas>
+</body>
+<script>
+    //    ko.applyBindings(new AppViewModel3());
+    ko.applyBindings(new AppViewModel(),document.getElementById("div1"));
+</script>
+</html>

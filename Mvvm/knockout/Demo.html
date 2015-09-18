@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<script src="knockout-3.2.0.js"></script>
+
+<body>
+
+<div id="div1">
+   <p> 单向绑定，VEIW到DOM</p>
+    The name is <span data-bind="text: personName"></span>
+    <br>
+    The age is <span data-bind="text: personAge" id="spage"></span>
+
+    <input type="button" id="cll" onclick="setname1()" value="更改">
+
+</div>
+--------------
+<div id="div2">
+    <p>   双向绑定</p>
+    The name is <span data-bind="text:personName"></span>
+    <br>
+    The age is <span data-bind="text:personAge"></span>
+
+    <input type="button" id="cll2" onclick="setname2()" value="更改">
+
+    <p>   连续点击，加载</p>
+    <input type="button" id="cll3" onclick="addage()" value="更改">
+</div>
+
+
+
+
+
+</body>
+<script>
+
+    //单纯VIEM值绑到DOM 无法添加事件
+    var myViewModel = {
+       personName: 'DIV1Bob',
+        personAge: 123
+    };
+    // 自动临听 更改mocel自动刷新DOM
+    var mySimpleViewModel = {
+        personName: ko.observable('DIV2Bob'),
+        personAge: ko.observable(123)
+    };
+
+
+
+
+
+
+   //默认绑定BODY?
+    ko.applyBindings(myViewModel,document.getElementById("div1"));
+    //设置绑定DOM
+    ko.applyBindings(mySimpleViewModel,document.getElementById("div2"));
+
+//    注册绑定
+    mySimpleViewModel.personName.subscribe(function(newValue) {
+        alert("The person's new name is " + newValue);
+    });
+
+//    var personName="测试传参";
+////    var oldValueTemp={
+////        personName:"测试传参"
+////
+////    }
+    mySimpleViewModel.personName.subscribe(function(oldValue) {
+        alert("The person's previous name is " + oldValue);
+    }, null, "beforeChange");
+
+    mySimpleViewModel.personName.extend({ notify: 'always' });
+//设置触发绑定的时间间隔
+
+    function setname1(){
+
+        myViewModel.personName('Mary');
+
+    }
+    function setname2(){
+
+
+        mySimpleViewModel.personName('Mary');
+//  一次修改多个      mySimpleViewModel.personName('Mary').personAge(222);
+    }
+    function addage(){
+
+   var c= mySimpleViewModel.personAge();
+//        alert(c);
+
+        mySimpleViewModel.personAge(c+1);
+    }
+    mySimpleViewModel.personName.extend({ rateLimit: 2000});
+
+    mySimpleViewModel.personAge.extend({ rateLimit: 2000});
+</script>
+
+</html>

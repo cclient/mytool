@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="knockout-3.2.0.js"></script>
+    <script>
+
+//        function MyViewModel() {
+//            this.produce = [ 'Apple', 'Banana', 'Celery', 'Corn', 'Orange', 'Spinach' ];
+//            this.selectedProduce = ko.observableArray([ 'Corn', 'Orange' ]);
+//            this.selectedAllProduce = ko.pureComputed({
+//                read: function () {
+//                    // Comparing length is quick and is accurate if only items from the
+//                    // main array are added to the selected array.
+//                    return this.selectedProduce().length === this.produce.length;
+//                },
+//                write: function (value) {
+//                    this.selectedProduce(value ? this.produce.slice(0) : []);
+//                },
+//                owner: this
+//            });
+//        }
+
+        function ViewModel(){
+            this.produce=['Apple', 'Banana', 'Celery', 'Corn', 'Orange', 'Spinach'];
+            this.selectedProduce=ko.observableArray([ 'Celery', 'Corn', 'Orange']);
+            //这里是绑定的值，用值的改变事件调用方法，不知道有没有直接绑定方法的。
+            this.selectedAllProduce=ko.pureComputed({
+                read:function(){
+                    return this.selectedProduce().length===this.produce.length;
+                },
+                write:function(value){
+//                    alert(value);
+                    this.selectedProduce(value?this.produce:[]);
+                }
+                , owner:this
+                //无OWNER 报错
+                //Uncaught TypeError: Unable to process binding "checked: function (){return selectedAllProduce }"
+               // Message: undefined is not a function
+
+            });
+
+        }
+
+
+
+    </script>
+</head>
+<body>
+<div>
+    <input type="checkbox" data-bind="checked:selectedAllProduce">Produce
+</div>
+checkedValue:$data,checked:$parent.selectedProduce 用当前项是否在父列表里判断？？？
+<div data-bind="foreach:produce">
+
+
+   <label>
+       <input type="checkbox" data-bind="checkedValue:$data,checked:$parent.selectedProduce">
+       <span data-bind="text: $data"></span>
+   </label><br>
+</div>
+</body>
+<script>
+    ko.applyBindings(new ViewModel());
+</script>
+</html>

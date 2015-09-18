@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="knockout-3.1.0.js"></script>
+</head>
+<body>
+
+
+<select data-bind="options:ticktes,
+ optionCaption:'Choose...',
+ optionsText:'name',
+ value:chosenTicket">
+</select>
+
+<button data-bind="enable:chosenTicket,click:restTicket">Clear</button>
+
+<p data-bind="with:chosenTicket">
+    <b data-bind="text:name"></b>
+    $<span data-bind="text:price"></span>
+</p>
+
+<script>
+    function TicketsViewModel() {
+        this.tickets = [
+            {
+                name: "111", price: 199
+            },
+            { name: "222", price: 299},
+            { name: "333", price: 399}
+
+        ];
+        this.ChosenTicket=ko.observable();
+   this.resetTicket=function(){
+       this.chosenTicket(null)
+   };
+
+    }
+ko.applyBindings(new TicketsViewModel());
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+        <!--标记ng-app告诉AngularJS处理整个HTML页并引导应用：-->
+<html ng-app>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="angular-1.2.2/angular.min.js"></script>
+    <script src="bind.js"></script>
+    <title></title>
+</head>
+<body>
+<form method="POST" action="UploadFile/FenXiangImg?wxopenid=222&orderid=111" enctype="multipart/form-data">
+    <label>分享语</label><br />
+    <input type="text"  ng-model="ShareText" placeholder="默认值" /> ><br />
+    <input type="button" value="上传" id="btnsubmit"  /><br />
+    <div ng-controller="PhoneListCtrl">
+        <!--<input  ng-change="filechange(1)" type="file" ng-model="val"  />-->
+        <div style="width: 900px; height: 400px; float: left" ng-repeat="file in files" >
+                <div  index="{{file.index}}" id="div{{file.index}}"  ng-click="callfile(file.index)">
+                    <img id="pic{{file.index}}" style="width: 300px;height:400px;float:left" src="" />
+                    <label  ng-click="removefile(file.index,this)" data-value="{{file.index}}">移除</label>
+                </div>
+           <!--<input  ng-change="filechange(file)" type="file" id="file{{file.index}}" name="file{{file.index}}"  />-->
+        </div>
+    </div>
+    <div id="info" style="background: red; width: 300px; height: 500px; float: left;display:none">
+        正在上传 请稍后
+    </div>
+</form>
+<canvas id="canvas" style="display:none"></canvas>
+</body>
+</html>

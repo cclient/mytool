@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<br>
+<lable>name</lable><input type="text" data-bind="name" /><br>
+<lable>age</lable><input  type="text" data-bind="value"/><br>
+<input type="button" onclick="mvvm.bind(window.ViewModel)" value="绑定数握">
+<input type="button" onclick="mvvm.saybind(window.ViewModel)" value="查看数据">
+<input type="button" onclick="window.ViewModel.changename()" value="改名">
+</body>
+<script>
+    (function(win){
+        window.mvvm={
+            bind:function(obj){
+                var inputs = document.getElementsByTagName("input");
+                if(!obj.hasini){
+                    alert("为 model 添加访问器，目的 model更改时，访问器set方法，内部更新UI");
+                    for (var Property in obj) {
+                        (function(){
+                            var proname=Property;
+                            var priname="_"+proname;
+                            if(typeof obj[Property]!="function"){
+                                obj[priname]=obj[proname];
+                                obj[proname]=null;
+                                var setget={
+                                    get: function () {
+                                        return obj[priname]
+                                    },
+                                    set:function (value) {
+                                        obj[priname] = value;
+                                        for (var i = 0; i < inputs.length; i++) {
+                                            var att = inputs[i].getAttribute("data-bind");
+                                            if (att == proname) {
+                                                inputs[i].value = obj[priname];
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                Object.defineProperty(obj, proname, setget);
+                            }
+                        })(obj,Property)
+                    }
+                }
+                obj.hasini=true;
+                alert("为UI绑定model的值，并为UI添加事件，修改UI时自动更新Model中的值");
+                for (var i = 0; i < inputs.length; i++) {
+                    var inputdom = inputs[i];
+                    var att = inputdom.getAttribute("data-bind");
+                    if (att != null) {
+                        for (var Property in obj) {
+                            if (Property == att) {
+//                      绑定属性
+                                inputdom.value = obj[Property];
+//                      绑定事件
+                                inputdom.onchange = function () {
+                                    obj[this.getAttribute("data-bind")] = this.value;
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            saybind:function(obj){
+                alert(obj.toString());
+            }
+        }
+
+    })(window);
+
+    var ViewModel={
+        name:"小明",
+        value:"24",
+        //hock toString方法，输出model值;
+        toString:function(){
+            var ps="";
+            for(var Property in this){
+                if(typeof this[Property]!="function"&&Property[0]!="_")
+                    ps+=Property+":"+this[Property]+";\n";
+            }
+            return ps;
+        },
+        changename:function(){
+            this.name="大明";
+        }
+    } ;
+</script>
+</html>
