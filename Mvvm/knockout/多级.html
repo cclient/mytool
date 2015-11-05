@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
@@ -52,32 +53,36 @@
         }
     </script>
 </head>
+
 <body>
-<div>
-    <div data-bind="foreach:first">
-        <div>
-            <h2 data-bind="text:name" style="display:inline-block; width:80px;"></h2>
-            <span data-bind="click:$parent.remove">父删除 已</span>
-            <ul data-bind="foreach:$data.secound">
-                <li><a href="javascript:void(0)">
-                    <!--<span data-bind="text:name,click:$root.pageChanged"></span>-->
-                <span data-bind="text:name">
+    <div>
+        <div data-bind="foreach:first">
+            <div>
+                <h2 data-bind="text:name" style="display:inline-block; width:80px;"></h2>
+                <span data-bind="click:$parent.remove">父删除 已</span>
+                <ul data-bind="foreach:$data.secound">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <!--<span data-bind="text:name,click:$root.pageChanged"></span>-->
+                            <span data-bind="text:name">
                 </span>
-                </a>
-                    <a href="javascript:void(0)" style="margin-left:10px;">
-                        <!--<p data-bind="text:$parent.name"></p>-->
-                        <span data-bind="click:$parents[1].remove.bind($parent)">子删除父</span>
-                        <span data-bind="click:$parent.remove.bind($data)">子删除已</span>
-                    </a>
-                </li>
-            </ul>
+                        </a>
+                        <a href="javascript:void(0)" style="margin-left:10px;">
+                            <!--<p data-bind="text:$parent.name"></p>-->
+                            <span data-bind="click:$parents[1].remove.bind($parent)">子删除父</span>
+                            <span data-bind="click:$parent.remove.bind($data)">子删除已</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    //    ko.applyBindings(new AppViewModel3());
+    <script>
+        //    ko.applyBindings(new AppViewModel3());
     ko.applyBindings(new AppViewModel());
-</script>
+
+    </script>
 </body>
+
 </html>

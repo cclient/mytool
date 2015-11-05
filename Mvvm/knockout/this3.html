@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
@@ -7,38 +8,29 @@
         var ViewModel = function(first, last) {
             this.firstName = ko.observable(first);
             this.lastName = ko.observable(last);
-
             this.fullName = ko.pureComputed(function() {
                 // Knockout tracks dependencies automatically. It knows that fullName depends on firstName and lastName, because these get called when evaluating fullName.
                 return this.firstName() + " " + this.lastName();
             }, this);
         };
-
-
         var kk={
             sayname:function(fun,value){
                 fun(value);
             }
-
         }
         var ViewModel2 = function() {
             this.firstName = 1;
             this.lastName =2;
-
             this.fullName =kk.sayname(function(ccc){
                   alert(ccc.firstName+ccc.lastName);
-
             },this)
         };
-
         var var1=new ViewModel2();
         val1.fullName;
-
     </script>
 </head>
+
 <body>
-
-
-
 </body>
+
 </html>

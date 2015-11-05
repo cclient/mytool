@@ -6,15 +6,12 @@
         var style = function (href) {
             this.href = ko.observable(href);             //css文件URL
         };
-
         var script = function (src) {
             this.src = ko.observable(src);               //js文件URL
         };
-
         var event = function (name, value) {
             this[name] = value.toString();                          //事件名称及调用的js脚本或过程名称（过程可来自引用的js文件）
         };
-
         var image = function (url, css, Class) {
             this.url = ko.observable(url);               //图片URL
             this.css = ko.observable(css);               //应用的sytle
@@ -28,7 +25,6 @@
             this.class = ko.observable(Class);           //应用的class（可以来自引用的css文件）
             this.events = ko.observableArray(events);    //按钮应用的事件集合
         };
-
         var page = function (id, name, background, css, Class, buttons, events) {
             this.id = ko.observable(id);                 //页面id
             this.name = ko.observable(name);             //页面名称
@@ -38,7 +34,6 @@
             this.buttons = ko.observableArray(buttons);  //页面上的按钮集合
             this.events = ko.observableArray(events);    //页面应用的事件集合
         };
-
         var config = {
             name: ko.observable(),                      //配置名称
             styles: ko.observableArray(),                //css文件列表
@@ -50,58 +45,38 @@
                 error: ko.observable(),                  //发生错误时的页面
             }
         }
-
         ko.applyBindings(config);
     </script>
-
-
     <script>
         //配置名称
         config.name("demo");
-
         //css文件列表
         config.styles([new style("http://example.com/content/styles/style1.css"), new style("http://example.com/content/styles/style2.css")]);
-
         //js文件列表
         config.scripts([new script("http://example.com/content/scripts/script1.js"), new script("http://example.com/content/scripts/script2.js")]);
-
         //按钮列表
         var buttons = new Array(new button(0, null, null, null, new Array(new event("onClick", ""))), new button(1, null, null, null, new Array(new event("onClick", "function(){return false;}"))));
-
         //背景图
         var background = new image("http://example.com/content/images/background-image.png", null, null);
         //页面
         var page = new page(0, null, background, null, null, buttons, null);
-
         //页面列表
         config.pages.step1([page, page]);
         config.pages.step2([page, page]);
         config.pages.step3([page, page]);
         config.pages.error(page);
-
-
-
-
         //将ko形式的ViewModel转成Json字符串
         var jsonString1 = config.toJsonString();
         //将Json字符串转成ko形式的ViewModel
         var viewModel2 = jsonString1.toViewModel();
-
         //将json字符串转成Json对象
         var jsonObject1 = jsonString1.toJsonObject(); //.toTryJsonObjcet();//可兼容非标准json字符串，因安全性较差，不推荐使用。
         //将Json对象转成json字符串
         var jsonString2 = jsonObject1.toJsonString();
-
         //将Json对象转成ko形式的ViewModel
         var viewModel1 = jsonObject1.toViewModel();
         //将ko形式的ViewModel转换成Json对象
         var jsonObject2 = config.toJsonObject();
-
-
-
         alert(jsonString2);
-
     </script>
-
-
 </body>

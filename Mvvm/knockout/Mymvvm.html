@@ -1,46 +1,38 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-
-<script>
-
-
-    为多个数性添加监听
-
-
+    <script>
+        // 为多个数性添加监听
    var MyBind= (function(){
-
         var Ko=function(){
-
             return function(){
               this.bind=function(){};
                 this.oberevable()
-
             }
-
         }
-
     })(window)
-
-
     var factorial=function(x){
         if(x<=1) return i;
         return x*arguments.callee(x-1);
-
     }
-</script>
+    </script>
 
 </head>
+
 <body>
-<p>First name: <input data-bind="value:firstName" /></p>
-<p>Last name: <input data-bind="value:lastName" /></p>
-<h2>Hello, <span data-bind="text:fullName"> </span>!</h2>
+    <p>First name:
+        <input data-bind="value:firstName" />
+    </p>
+    <p>Last name:
+        <input data-bind="value:lastName" />
+    </p>
+    <h2>Hello, <span data-bind="text:fullName"> </span>!</h2>
 
 </body>
 <script>
-
     // Here's my data model
     var ViewModel = function(first, last) {
         this.firstName = ko.observable(first);
@@ -55,4 +47,5 @@
     ko.applyBindings(new ViewModel("Planet", "Earth")); // This makes Knockout get to work
 
 </script>
+
 </html>

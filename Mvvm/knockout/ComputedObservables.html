@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
@@ -13,7 +14,6 @@
                 return this.firstName()+" "+this.lastName();
             },this);
             //不加this this为windows报错，加this　this为当前对象，不报错　只在当前属性中操作，不引用其他对象，最好改为ｐｕｒｅ
-
             //现在还不会直接绑事件
             this.sayNo=function(){
                 for (var prop in this) {
@@ -21,7 +21,6 @@
                     if (this.hasOwnProperty(prop) && !ko.isComputed(this[prop])) {
 //                        alert(this[prop]);
                     }
-
                 }
             };
         }
@@ -47,28 +46,26 @@
         }
     </script>
 </head>
+
 <body>
-<div id="div1">
-    firstName<input data-bind="value:firstName,valueUpdate:'afterkeydown'">
-    <br>
-    lastName<input data-bind="value:lastName,valueUpdate:'afterkeydown'">
-    <br>
-    fullName<span data-bind="text:fullName"></span>
-
-    非计算值<input type="button" onclick="say()">
-
-
-
-</div>
-<div id="div2">
-
-    <div>First name: <span data-bind="text: firstName"></span></div>
-    <div>Last name: <span data-bind="text: lastName"></span></div>
-    <div class="heading">Hello, <input data-bind="textInput: fullName"/></div>
-
-</div>
-<script>
-var obj=new AppViewModel();
+    <div id="div1">
+        firstName
+        <input data-bind="value:firstName,valueUpdate:'afterkeydown'">
+        <br> lastName
+        <input data-bind="value:lastName,valueUpdate:'afterkeydown'">
+        <br> fullName
+        <span data-bind="text:fullName"></span> 非计算值
+        <input type="button" onclick="say()">
+    </div>
+    <div id="div2">
+        <div>First name: <span data-bind="text: firstName"></span></div>
+        <div>Last name: <span data-bind="text: lastName"></span></div>
+        <div class="heading">Hello,
+            <input data-bind="textInput: fullName" />
+        </div>
+    </div>
+    <script>
+        var obj=new AppViewModel();
     ko.applyBindings(obj,document.getElementById("div1"));
     function say(){
         obj.sayNo();
@@ -76,7 +73,7 @@ var obj=new AppViewModel();
     }
 ko.applyBindings(new MyViewModel(),document.getElementById("div2"));
 
-
-</script>
+    </script>
 </body>
+
 </html>

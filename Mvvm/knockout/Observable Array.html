@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
     <meta charset="UTF-8">
     <script src="knockout-3.2.0.js"></script>
     <title></title>
     <script>
-//        var myObcervableArray=ko.observableArray();
+        //        var myObcervableArray=ko.observableArray();
 //        myObcervableArray.push('some value');
-
         var SimpleListModel=function(items){
 
             this.items=ko.observableArray(items);
@@ -20,41 +20,34 @@
                 }
             }.bind(this); //这里不太清楚
         }
-
     </script>
 </head>
+
 <body>
-
-
-<div id="demo">
-    <form data-bind="submit: addItem">
-        New item:
-        <input data-bind='value: itemToAdd, valueUpdate: "afterkeydown"' />
-        <button type="submit" data-bind="enable: itemToAdd().length > 0">Add</button>
-        <p>Your items:</p>
-        <select multiple="multiple" width="100px" data-bind="options: items"> </select>
-    </form>
-
-</div>
-<div id="example1">
-    <p>Example1</p>
-    <form data-bind="submit:addItem">
-New Items <input type="text" data-bind="value:itemToAdd,valueUpdate:'afterkeydown'"/>
-        <button type="button" data-bind="enable: itemToAdd().length > 0">Add</button>
-        <button type="button" data-bind="enable: items().length > 0">Delete</button>
-        <p>Your items:</p>
-        <select multiple="multiple" width="100px" data-bind="options: items"> </select>
-
-
-
-    </form>
-
-</div>
-
-
+    <div id="demo">
+        <form data-bind="submit: addItem">
+            New item:
+            <input data-bind='value: itemToAdd, valueUpdate: "afterkeydown"' />
+            <button type="submit" data-bind="enable: itemToAdd().length > 0">Add</button>
+            <p>Your items:</p>
+            <select multiple="multiple" width="100px" data-bind="options: items"> </select>
+        </form>
+    </div>
+    <div id="example1">
+        <p>Example1</p>
+        <form data-bind="submit:addItem">
+            New Items
+            <input type="text" data-bind="value:itemToAdd,valueUpdate:'afterkeydown'" />
+            <button type="button" data-bind="enable: itemToAdd().length > 0">Add</button>
+            <button type="button" data-bind="enable: items().length > 0">Delete</button>
+            <p>Your items:</p>
+            <select multiple="multiple" width="100px" data-bind="options: items"> </select>
+        </form>
+    </div>
 </body>
 <script>
     ko.applyBindings(new SimpleListModel(["Alpha", "Beta", "Gamma"]));
 
 </script>
+
 </html>
