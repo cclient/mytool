@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+</head>
+<body>
+<div id="divtest"></div>
+</body>
+<script>
+    (function(win){
+
+        var Jquery=function(id){
+            return new Jquery.fn.ini(id);
+        };
+        Jquery.fn=Jquery.prototype;
+
+        Jquery.fn.ini=function(id){
+            this.name="jqdom";
+            this.dom=document.getElementById(id);
+            var type=typeof(id);
+            if(type==="function"){
+              document.body.load=id();
+            }
+        }
+        win.$=Jquery;
+    })(window);
+
+
+
+    $(function(){
+        var mqdom=$("divtest");
+        alert(mqdom.name);
+    })
+</script>
+</html>
